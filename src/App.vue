@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <v-app id="app">
     <v-navigation-drawer
       fixed
       v-model="drawer"
@@ -14,7 +14,14 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-
+        <v-list-tile>
+          <v-list-tile-action @click="logout">
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="blue" dark fixed app>
@@ -39,9 +46,17 @@
 </template>
 
 <script>
-  export default {
-    data: () => ({
-      drawer: null
-    })
+import firebase from 'firebase'
+export default {
+  data: () => ({
+    drawer: null
+  }),
+  methods: {
+    logout () {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    }
   }
+}
 </script>

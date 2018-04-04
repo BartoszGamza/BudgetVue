@@ -22,7 +22,7 @@ export default {
     signUp () {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
         function (user) {
-          alert('account created!')
+          this.$router.replace('main')
         },
         function (err) {
           alert(err.message)

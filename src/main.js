@@ -11,6 +11,7 @@ Vue.use(Vuetify)
 
 Vue.config.productionTip = false
 
+let app
 var config = {
   apiKey: 'AIzaSyAYd4rXDztFs7dSqV_4tlPg4VfbaDz0CHQ',
   authDomain: 'vuedget.firebaseapp.com',
@@ -20,11 +21,14 @@ var config = {
   messagingSenderId: '770237910695'
 }
 firebase.initializeApp(config)
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  components: { App },
-  template: '<App/>'
+firebase.auth().onAuthStateChanged(function (user) {
+  if (!app) {
+    /* eslint-disable no-new */
+    new Vue({
+      el: '#app',
+      router,
+      components: { App },
+      template: '<App/>'
+    })
+  }
 })
