@@ -1,30 +1,66 @@
 <template>
   <div>
-  <v-expansion-panel expand>
-    <v-expansion-panel-content v-for="(item,i) in 5" :key="i" :value="item === 2">
-      <div slot="header">Item</div>
-      <v-card>
-        <v-card-text class="grey lighten-3">Item Details</v-card-text>
-        <v-card-actions>
-          <v-btn flat color="green">Edit</v-btn>
-          <v-btn flat color="red">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-expansion-panel-content>
-  </v-expansion-panel>
-  <v-btn
-              fixed
-              dark
-              fab
-              bottom
-              right
-              color="pink"
-            >
-              <v-icon>add</v-icon>
-            </v-btn>
+    <v-navigation-drawer
+      fixed
+      v-model="drawer"
+      app
+    >
+      <v-list dense>
+        <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>home</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile>
+          <v-list-tile-action @click="logout">
+            <v-icon>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+      </v-list>
+    </v-navigation-drawer>
+    <v-toolbar color="blue" dark fixed app>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+      <v-toolbar-title>Balance</v-toolbar-title>
+    </v-toolbar>
+    <v-content>
+      <v-container fluid grid-list-lg>
+        <v-layout
+          justify-center
+          align-center
+          row wrap
+        >
+          <v-flex xs12 sm12 md6>
+           <app-items>
+           </app-items>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-content>
   </div>
 </template>
 
 <script>
-
+import Items from '@/components/Items'
+import firebase from 'firebase'
+export default {
+  data: () => ({
+    drawer: null
+  }),
+  methods: {
+    logout () {
+      firebase.auth().signOut().then(() => {
+        this.$router.replace('login')
+      })
+    },
+    components: {
+      appItems: Items
+    }
+  }
+}
 </script>

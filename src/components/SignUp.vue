@@ -21,10 +21,10 @@ export default {
   methods: {
     signUp () {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        function (user) {
+        (user) => {
           this.$router.replace('main')
         },
-        function (err) {
+        (err) => {
           alert(err.message)
         })
     }
