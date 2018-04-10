@@ -26,7 +26,7 @@
           </v-card-text>
           <v-card-actions>
          <v-btn color="primary"  @click="login">Login</v-btn>
-         <router-link to="/signup"><v-btn>Register</v-btn></router-link>
+         <v-btn to="/signup">Register</v-btn>
        </v-card-actions>
         </v-card>
       </v-flex>
