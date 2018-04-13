@@ -5,9 +5,11 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import firebase from 'firebase'
+import VueFire from 'vuefire'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
+Vue.use(VueFire)
 
 Vue.config.productionTip = false
 
@@ -32,3 +34,4 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
   }
 })
+export const db = firebase.firestore()

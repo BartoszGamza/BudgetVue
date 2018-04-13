@@ -45,6 +45,7 @@
 </template>
 
 <script>
+// import { db } from '../main'
 export default {
   name: 'TableSpend',
   data () {
@@ -66,6 +67,11 @@ export default {
     },
     editItem () {}
   }
+  // firestore () {
+  //   return {
+  //     items: db.collection()
+  //   }
+  // }
 }
 </script>
 
