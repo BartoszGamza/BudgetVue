@@ -6,6 +6,7 @@ import router from './router'
 import Vuetify from 'vuetify'
 import firebase from 'firebase'
 import VueFire from 'vuefire'
+import { store } from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
@@ -29,6 +30,7 @@ firebase.auth().onAuthStateChanged(function (user) {
     new Vue({
       el: '#app',
       router,
+      store,
       components: { App },
       template: '<App/>'
     })
