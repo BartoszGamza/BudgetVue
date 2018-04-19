@@ -43,6 +43,18 @@ export default {
       password: ''
     }
   },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    }
+  },
+  watch: {
+    user (value) {
+      if (value !== null && value !== undefined) {
+        this.$router.replace('main')
+      }
+    }
+  },
   methods: {
     signUp () {
       const signData = {

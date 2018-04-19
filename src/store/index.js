@@ -20,11 +20,7 @@ export const store = new Vuex.Store({
         id: 'aaabcd12'
       }
     ],
-    user: {
-      email: '',
-      id: '',
-      items: []
-    }
+    user: null
   },
   mutations: {
     createItem (state, payload) {
@@ -52,9 +48,22 @@ export const store = new Vuex.Store({
             items: []
           }
           commit('setUser', newUser)
-          this.$router.replace('main')
         },
         function (err) {
+          alert(err.message)
+        })
+    },
+    logIn ({commit}, payload) {
+      firebase.auth().signInWithEmailAndPassword(payload.email, payload.password).then(
+        (user) => {
+          const newUser = {
+            id: user.uid,
+            email: user.email
+            // items: []
+          }
+          commit('setUser', newUser)
+        },
+        (err) => {
           alert(err.message)
         })
     }
@@ -71,6 +80,9 @@ export const store = new Vuex.Store({
           return item.id === itemId
         })
       }
+    },
+    user (state) {
+      return state.user
     }
   }
 })
