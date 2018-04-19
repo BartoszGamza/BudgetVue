@@ -35,7 +35,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 export default {
   name: 'SignUp',
   data () {
@@ -46,13 +45,11 @@ export default {
   },
   methods: {
     signUp () {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        function (user) {
-          this.$router.replace('main')
-        },
-        function (err) {
-          alert(err.message)
-        })
+      const signData = {
+        email: this.email,
+        password: this.password
+      }
+      this.$store.dispatch('signUp', signData)
     }
   }
 }

@@ -1,5 +1,6 @@
 import Vuex from 'vuex'
 import Vue from 'vue'
+import firebase from 'firebase'
 
 Vue.use(Vuex)
 
@@ -18,11 +19,19 @@ export const store = new Vuex.Store({
         date: '2018-04-17',
         id: 'aaabcd12'
       }
-    ]
+    ],
+    user: {
+      email: '',
+      id: '',
+      items: []
+    }
   },
   mutations: {
     createItem (state, payload) {
       state.loadedItems.push(payload)
+    },
+    setUser (state, payload) {
+      state.user = payload
     }
   },
   actions: {
@@ -33,6 +42,21 @@ export const store = new Vuex.Store({
         date: payload.date
       }
       commit('createItem', item)
+    },
+    signUp ({commit}, payload) {
+      firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password).then(
+        function (user) {
+          const newUser = {
+            id: user.uid,
+            email: user.email,
+            items: []
+          }
+          commit('setUser', newUser)
+          this.$router.replace('main')
+        },
+        function (err) {
+          alert(err.message)
+        })
     }
   },
   getters: {
