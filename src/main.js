@@ -32,7 +32,10 @@ firebase.auth().onAuthStateChanged(function (user) {
       router,
       store,
       components: { App },
-      template: '<App/>'
+      template: '<App/>',
+      created () {
+        this.$store.dispatch('loadItems')
+      }
     })
   }
 })
