@@ -6,7 +6,7 @@
       <v-card>
         <v-card-text class="grey lighten-3">{{item.desc}} on {{item.date}}</v-card-text>
         <v-card-actions>
-          <v-btn flat color="green" @click="editItem(item.id)">Edit</v-btn>
+          <v-btn flat color="green" @click="editItem(item)">Edit</v-btn>
           <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>
         </v-card-actions>
       </v-card>
@@ -19,7 +19,7 @@
               bottom
               right
               color="pink"
-              @click="dialog = true"
+              @click="dialog = true, isEdit = false"
             >
               <v-icon>add</v-icon>
             </v-btn>
@@ -40,7 +40,8 @@
         </v-date-picker>
    </v-form>
     <v-card-actions>
-      <v-btn color="primary" @click="saveItem">Save</v-btn>
+      <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
+      <v-btn v-else color="primary" @click="editItem">Save Edit</v-btn>
       <v-btn @click.stop="dialog = !dialog">Cancel</v-btn> 
     </v-card-actions>
         </v-card>
@@ -62,7 +63,9 @@ export default {
       dialog: false,
       amnout: '',
       description: '',
-      date: null
+      date: null,
+      id: null,
+      isEdit: false
     }
   },
   methods: {
@@ -82,8 +85,28 @@ export default {
     deleteItem (key) {
       this.$store.dispatch('deleteItem', key)
     },
-    editItem (key) {
-      console.log(key)
+    editItem (item) {
+      this.isEdit = true
+      this.amnout = item.amnt
+      this.description = item.desc
+      this.date = item.date
+      this.dialog = true
+      this.id = item.id
+    },
+    saveEdit () {
+      const itemData = {
+        amnt: this.amnout,
+        desc: this.description,
+        date: this.date
+      }
+      this.$store.dispatch('createItem', itemData)
+      this.$store.dispatch('deleteItem', this.id)
+      this.$store.dispatch('loadItems')
+      this.amnout = ''
+      this.description = ''
+      this.date = null
+      this.id = null
+      this.dialog = false
     }
   }
 }
