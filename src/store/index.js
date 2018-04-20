@@ -6,28 +6,19 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
-    loadedItems: [
-      // {
-      //   amnt: '12',
-      //   desc: 'beer',
-      //   date: '2018-04-18',
-      //   id: 'aaabc123'
-      // },
-      // {
-      //   amnt: '4',
-      //   desc: 'bread',
-      //   date: '2018-04-17',
-      //   id: 'aaabcd12'
-      // }
-    ],
+    loadedItems: [],
     user: null
   },
   mutations: {
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     },
-    createItem (state, payload) {
-      state.loadedItems.push(payload)
+    // createItem (state, payload) {
+    //   state.loadedItems.push(payload)
+    // },
+    deleteItem (state, payload) {
+      var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
+      state.loadedItems.splice(idx, 1)
     },
     setUser (state, payload) {
       state.user = payload
@@ -62,8 +53,19 @@ export const store = new Vuex.Store({
       }
       const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(uid).child('items').push(item)
-        .then((data) => {
-          commit('createItem', item)
+        // .then((data) => {
+        //   commit('createItem', item)
+        // })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
+    deleteItem ({commit}, payload) {
+      const uid = firebase.auth().currentUser.uid
+      const key = payload
+      firebase.database().ref().child('users').child(uid).child('items').child(key).remove()
+        .then(() => {
+          commit('deleteItem', key)
         })
         .catch((error) => {
           console.log(error)

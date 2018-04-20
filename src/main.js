@@ -39,4 +39,3 @@ firebase.auth().onAuthStateChanged(function (user) {
     })
   }
 })
-export const db = firebase.firestore()

@@ -6,8 +6,8 @@
       <v-card>
         <v-card-text class="grey lighten-3">{{item.desc}} on {{item.date}}</v-card-text>
         <v-card-actions>
-          <v-btn flat color="green">Edit</v-btn>
-          <v-btn flat color="red" @click="deleteItem(item.key)">Delete</v-btn>
+          <v-btn flat color="green" @click="editItem(item.id)">Edit</v-btn>
+          <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-expansion-panel-content>
@@ -67,27 +67,25 @@ export default {
   },
   methods: {
     saveItem () {
-      // this.$store.state.items.push({amnt: this.amnout, desc: this.description})
-      // this.dialog = !this.dialog
       const itemData = {
         amnt: this.amnout,
         desc: this.description,
         date: this.date
       }
       this.$store.dispatch('createItem', itemData)
+      this.$store.dispatch('loadItems')
+      this.amnout = ''
+      this.description = ''
+      this.date = null
       this.dialog = !this.dialog
     },
     deleteItem (key) {
-      // this.items.splice(id, 1)
-      console.log(key)
+      this.$store.dispatch('deleteItem', key)
     },
-    editItem () {}
+    editItem (key) {
+      console.log(key)
+    }
   }
-  // firestore () {
-  //   return {
-  //     items: db.collection()
-  //   }
-  // }
 }
 </script>
 
