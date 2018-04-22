@@ -41,7 +41,7 @@
    </v-form>
     <v-card-actions>
       <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
-      <v-btn v-else color="primary" @click="editItem">Save Edit</v-btn>
+      <v-btn v-else color="primary" @click="saveEdit">Save Edit</v-btn>
       <v-btn @click.stop="dialog = !dialog">Cancel</v-btn> 
     </v-card-actions>
         </v-card>
@@ -94,19 +94,19 @@ export default {
       this.id = item.id
     },
     saveEdit () {
-      const itemData = {
+      const itemEdit = {
         amnt: this.amnout,
         desc: this.description,
-        date: this.date
+        date: this.date,
+        id: this.id
       }
-      this.$store.dispatch('createItem', itemData)
-      this.$store.dispatch('deleteItem', this.id)
+      this.$store.dispatch('editItem', itemEdit)
       this.$store.dispatch('loadItems')
+      this.dialog = !this.dialog
       this.amnout = ''
       this.description = ''
       this.date = null
       this.id = null
-      this.dialog = false
     }
   }
 }

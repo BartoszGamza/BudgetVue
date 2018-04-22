@@ -71,6 +71,18 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
+    editItem ({commit}, payload) {
+      const item = {
+        amnt: payload.amnt,
+        desc: payload.desc,
+        date: payload.date
+      }
+      const uid = firebase.auth().currentUser.uid
+      firebase.database().ref().child('users').child(uid).child('items').child(payload.id).update(item)
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     signUp ({commit}, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password).then(
         function (user) {
