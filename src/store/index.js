@@ -37,7 +37,8 @@ export const store = new Vuex.Store({
               id: key,
               amnt: obj[key].amnt,
               desc: obj[key].desc,
-              date: obj[key].date
+              date: obj[key].date,
+              cat: obj[key].cat
             })
             commit('setLoadedItems', items)
           }
@@ -50,7 +51,8 @@ export const store = new Vuex.Store({
       const item = {
         amnt: payload.amnt,
         desc: payload.desc,
-        date: payload.date
+        date: payload.date,
+        cat: payload.cat
       }
       const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(uid).child('items').push(item)
@@ -76,7 +78,8 @@ export const store = new Vuex.Store({
       const item = {
         amnt: payload.amnt,
         desc: payload.desc,
-        date: payload.date
+        date: payload.date,
+        cat: payload.cat
       }
       const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(uid).child('items').child(payload.id).update(item)

@@ -4,7 +4,7 @@
     <v-expansion-panel-content v-for="item in items" :key="item.key">
       <div slot="header">{{item.amnt}}  {{item.desc}}</div>
       <v-card>
-        <v-card-text class="grey lighten-3">on {{item.date}}</v-card-text>
+        <v-card-text class="grey lighten-3">on {{item.date}}  {{item.cat}}</v-card-text>
         <v-card-actions>
           <v-btn flat color="green" @click="editItem(item)">Edit</v-btn>
           <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>
@@ -30,12 +30,18 @@
             <v-text-field
             label="Amnout"
             v-model="amnout"
-            type="number"
+            mask="####"
             ></v-text-field>
             <v-text-field
             label="Description"
             v-model="description"
           ></v-text-field>
+            <v-select
+            v-model="cat"
+            label="Select a category"
+            single-line
+            :items="cats"
+        ></v-select>
             <v-date-picker
             full-width
             v-model="date"
@@ -70,7 +76,15 @@ export default {
       description: '',
       date: null,
       id: null,
-      isEdit: false
+      isEdit: false,
+      cats: ['Alcohol',
+        'Grocceries',
+        'Entertainment',
+        'Tobacco',
+        'Restaurant',
+        'Soft drinks'
+      ],
+      cat: ''
     }
   },
   methods: {
@@ -78,12 +92,14 @@ export default {
       const itemData = {
         amnt: this.amnout,
         desc: this.description,
-        date: this.date
+        date: this.date,
+        cat: this.cat
       }
       this.$store.dispatch('createItem', itemData)
       this.$store.dispatch('loadItems')
       this.amnout = ''
       this.description = ''
+      this.cat = ''
       this.date = null
       this.dialog = !this.dialog
     },
@@ -95,6 +111,7 @@ export default {
       this.amnout = item.amnt
       this.description = item.desc
       this.date = item.date
+      this.cat = item.cat
       this.dialog = true
       this.id = item.id
     },
@@ -103,6 +120,7 @@ export default {
         amnt: this.amnout,
         desc: this.description,
         date: this.date,
+        cat: this.cat,
         id: this.id
       }
       this.$store.dispatch('editItem', itemEdit)
@@ -110,6 +128,7 @@ export default {
       this.dialog = !this.dialog
       this.amnout = ''
       this.description = ''
+      this.cat = ''
       this.date = null
       this.id = null
     }
