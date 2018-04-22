@@ -14,6 +14,14 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        <!-- <v-list-tile>
+          <v-list-tile-action>
+            <v-icon>add</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Add Account</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile> -->
         <v-list-tile>
           <v-list-tile-action @click="logout">
             <v-icon>exit_to_app</v-icon>
@@ -21,20 +29,14 @@
           <v-list-tile-content>
             <v-list-tile-title>Logout</v-list-tile-title>
           </v-list-tile-content>
-        </v-list-tile>
-        <v-list-tile>
-          <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-content>
-            <v-list-tile-title>user email todo</v-list-tile-title>
-          </v-list-tile-content>
-        </v-list-tile>        
+        </v-list-tile>       
       </v-list>
     </v-navigation-drawer>
     <v-toolbar color="blue" dark fixed app>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Balance</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-title>{{balance}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid grid-list-lg>
@@ -62,6 +64,9 @@ export default {
   computed: {
     user () {
       // return this.$store.getters.user
+    },
+    balance () {
+      return this.$store.getters.balance
     }
   },
   methods: {
@@ -69,6 +74,8 @@ export default {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
       })
+    },
+    addAccount () {
     }
   },
   components: {

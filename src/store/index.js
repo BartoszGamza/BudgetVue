@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     loadedItems: [],
-    user: null
+    user: null,
+    balance: 0
   },
   mutations: {
     setLoadedItems (state, payload) {
@@ -126,6 +127,9 @@ export const store = new Vuex.Store({
     },
     user (state) {
       return state.user
+    },
+    balance (state) {
+      return state.balance
     }
   }
 })

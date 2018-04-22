@@ -2,9 +2,9 @@
   <div>
     <v-expansion-panel expand>
     <v-expansion-panel-content v-for="item in items" :key="item.key">
-      <div slot="header">{{item.amnt}}</div>
+      <div slot="header">{{item.amnt}}  {{item.desc}}</div>
       <v-card>
-        <v-card-text class="grey lighten-3">{{item.desc}} on {{item.date}}</v-card-text>
+        <v-card-text class="grey lighten-3">on {{item.date}}</v-card-text>
         <v-card-actions>
           <v-btn flat color="green" @click="editItem(item)">Edit</v-btn>
           <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>
@@ -24,26 +24,31 @@
               <v-icon>add</v-icon>
             </v-btn>
       <v-dialog v-model="dialog" max-width="500px">
-        <v-card>
+        <v-card class="text-xs-center">
+          <v-card-text>
           <v-form>
-        <v-text-field
-        label="Amnout"
-        v-model="amnout"
-        ></v-text-field>
-        <v-text-field
-        label="Name"
-        v-model="description"
-     ></v-text-field>
-        <v-date-picker 
-        v-model="date"
-        landscape>
-        </v-date-picker>
-   </v-form>
-    <v-card-actions>
-      <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
-      <v-btn v-else color="primary" @click="saveEdit">Save Edit</v-btn>
-      <v-btn @click.stop="dialog = !dialog">Cancel</v-btn> 
-    </v-card-actions>
+            <v-text-field
+            label="Amnout"
+            v-model="amnout"
+            type="number"
+            ></v-text-field>
+            <v-text-field
+            label="Description"
+            v-model="description"
+          ></v-text-field>
+            <v-date-picker
+            full-width
+            v-model="date"
+            >
+            </v-date-picker>
+          </v-form>
+          </v-card-text>
+          
+          <v-card-actions>
+            <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
+            <v-btn v-else color="primary" @click="saveEdit">Save Edit</v-btn>
+            <v-btn @click.stop="dialog = !dialog">Cancel</v-btn> 
+          </v-card-actions>
         </v-card>
       </v-dialog>
   </div>
