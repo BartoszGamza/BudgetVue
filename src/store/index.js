@@ -26,9 +26,13 @@ export const store = new Vuex.Store({
     }
   },
   actions: {
-    loadItems ({commit}) {
-      const uid = firebase.auth().currentUser.uid
-      firebase.database().ref().child('users').child(uid).child('items').once('value')
+    getUser ({commit}) {
+      const user = firebase.auth().currentUser
+      commit('setUser', user)
+    },
+    loadItems ({commit, state}) {
+      // const uid = firebase.auth().currentUser.uid
+      firebase.database().ref().child('users').child(state.user.uid).child('items').once('value')
         .then((data) => {
           const items = []
           const obj = data.val()
@@ -47,15 +51,15 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
-    createItem ({commit}, payload) {
+    createItem ({commit, state}, payload) {
       const item = {
         amnt: payload.amnt,
         desc: payload.desc,
         date: payload.date,
         cat: payload.cat
       }
-      const uid = firebase.auth().currentUser.uid
-      firebase.database().ref().child('users').child(uid).child('items').push(item)
+      // const uid = firebase.auth().currentUser.uid
+      firebase.database().ref().child('users').child(state.user.uid).child('items').push(item)
         // .then((data) => {
         //   commit('createItem', item)
         // })
@@ -63,10 +67,10 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
-    deleteItem ({commit}, payload) {
-      const uid = firebase.auth().currentUser.uid
+    deleteItem ({commit, state}, payload) {
+      // const uid = firebase.auth().currentUser.uid
       const key = payload
-      firebase.database().ref().child('users').child(uid).child('items').child(key).remove()
+      firebase.database().ref().child('users').child(state.user.uid).child('items').child(key).remove()
         .then(() => {
           commit('deleteItem', key)
         })
@@ -74,15 +78,15 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
-    editItem ({commit}, payload) {
+    editItem ({commit, state}, payload) {
       const item = {
         amnt: payload.amnt,
         desc: payload.desc,
         date: payload.date,
         cat: payload.cat
       }
-      const uid = firebase.auth().currentUser.uid
-      firebase.database().ref().child('users').child(uid).child('items').child(payload.id).update(item)
+      // const uid = firebase.auth().currentUser.uid
+      firebase.database().ref().child('users').child(state.user.uid).child('items').child(payload.id).update(item)
         .catch((error) => {
           console.log(error)
         })
@@ -104,11 +108,7 @@ export const store = new Vuex.Store({
     logIn ({commit}, payload) {
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password).then(
         (user) => {
-          const newUser = {
-            id: user.uid,
-            email: user.email
-          }
-          commit('setUser', newUser)
+          commit('setUser', user)
         },
         (err) => {
           alert(err.message)

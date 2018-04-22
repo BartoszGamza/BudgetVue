@@ -8,6 +8,14 @@
       <v-list dense>
         <v-list-tile>
           <v-list-tile-action>
+            <v-icon>person</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>{{user.email}}</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>        
+        <v-list-tile>
+          <v-list-tile-action>
             <v-icon>home</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
@@ -63,11 +71,17 @@ export default {
   }),
   computed: {
     user () {
-      // return this.$store.getters.user
+      return this.$store.getters.user
     },
     balance () {
       return this.$store.getters.balance
     }
+  },
+  created () {
+    this.$store.dispatch('getUser')
+    console.log('gotuser')
+    console.log('fetchinglist')
+    this.$store.dispatch('loadItems')
   },
   methods: {
     logout () {

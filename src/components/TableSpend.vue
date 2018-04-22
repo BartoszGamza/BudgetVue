@@ -4,7 +4,7 @@
     <v-expansion-panel-content v-for="item in items" :key="item.key">
       <div slot="header">{{item.amnt}}  {{item.desc}}</div>
       <v-card>
-        <v-card-text class="grey lighten-3">on {{item.date}}  {{item.cat}}</v-card-text>
+        <v-card-text class="grey lighten-3">{{item.cat}} on {{item.date}}</v-card-text>
         <v-card-actions>
           <v-btn flat color="green" @click="editItem(item)">Edit</v-btn>
           <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>

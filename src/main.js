@@ -5,12 +5,10 @@ import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
 import firebase from 'firebase'
-import VueFire from 'vuefire'
 import { store } from './store/index'
 import 'vuetify/dist/vuetify.min.css'
 
 Vue.use(Vuetify)
-Vue.use(VueFire)
 
 Vue.config.productionTip = false
 
@@ -34,7 +32,6 @@ firebase.auth().onAuthStateChanged(function (user) {
       components: { App },
       template: '<App/>',
       created () {
-        this.$store.dispatch('loadItems')
       }
     })
   }
