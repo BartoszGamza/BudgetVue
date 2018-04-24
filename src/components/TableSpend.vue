@@ -7,7 +7,7 @@
         <v-card-text class="grey lighten-3">{{item.cat}} on {{item.date}}</v-card-text>
         <v-card-actions>
           <v-btn flat color="green" @click="editItem(item)">Edit</v-btn>
-          <v-btn flat color="red" @click="deleteItem(item.id)">Delete</v-btn>
+          <v-btn flat color="red" @click="deleteItem(item.id, item.amnt)">Delete</v-btn>
         </v-card-actions>
       </v-card>
     </v-expansion-panel-content>
@@ -103,8 +103,8 @@ export default {
       this.date = null
       this.dialog = !this.dialog
     },
-    deleteItem (key) {
-      this.$store.dispatch('deleteItem', key)
+    deleteItem (key, amnt) {
+      this.$store.dispatch('deleteItem', {key, amnt})
     },
     editItem (item) {
       this.isEdit = true

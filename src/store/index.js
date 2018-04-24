@@ -11,6 +11,9 @@ export const store = new Vuex.Store({
     balance: 0
   },
   mutations: {
+    addBalance (state, payload) {
+      state.balance = parseInt(state.balance) + parseInt(payload)
+    },
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     },
@@ -18,8 +21,9 @@ export const store = new Vuex.Store({
     //   state.loadedItems.push(payload)
     // },
     deleteItem (state, payload) {
-      var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
+      var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload.key)
       state.loadedItems.splice(idx, 1)
+      state.balance = parseInt(state.balance) - parseInt(payload.amnt)
     },
     setUser (state, payload) {
       state.user = payload
@@ -58,21 +62,21 @@ export const store = new Vuex.Store({
         date: payload.date,
         cat: payload.cat
       }
-      // const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(state.user.uid).child('items').push(item)
-        // .then((data) => {
-        //   commit('createItem', item)
-        // })
+        .then((data) => {
+          commit('addBalance', item.amnt)
+        })
         .catch((error) => {
           console.log(error)
         })
     },
     deleteItem ({commit, state}, payload) {
       // const uid = firebase.auth().currentUser.uid
-      const key = payload
+      const key = payload.key
+      const amnt = payload.amnt
       firebase.database().ref().child('users').child(state.user.uid).child('items').child(key).remove()
         .then(() => {
-          commit('deleteItem', key)
+          commit('deleteItem', {key, amnt})
         })
         .catch((error) => {
           console.log(error)
@@ -93,15 +97,10 @@ export const store = new Vuex.Store({
     },
     signUp ({commit}, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password).then(
-        function (user) {
-          const newUser = {
-            id: user.uid,
-            email: user.email,
-            items: []
-          }
-          commit('setUser', newUser)
+        (user) => {
+          commit('setUser', user)
         },
-        function (err) {
+        (err) => {
           alert(err.message)
         })
     },
