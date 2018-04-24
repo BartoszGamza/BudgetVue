@@ -61,7 +61,6 @@
 </template>
 
 <script>
-// import { db } from '../main'
 export default {
   name: 'TableSpend',
   computed: {
@@ -114,6 +113,7 @@ export default {
       this.cat = item.cat
       this.dialog = true
       this.id = item.id
+      this.$store.dispatch('updateBalance', this.amnout)
     },
     saveEdit () {
       const itemEdit = {

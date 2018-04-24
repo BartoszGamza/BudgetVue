@@ -14,6 +14,9 @@ export const store = new Vuex.Store({
     addBalance (state, payload) {
       state.balance = parseInt(state.balance) + parseInt(payload)
     },
+    subBalance (state, payload) {
+      state.balance = parseInt(state.balance) - parseInt(payload)
+    },
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     },
@@ -21,15 +24,17 @@ export const store = new Vuex.Store({
     //   state.loadedItems.push(payload)
     // },
     deleteItem (state, payload) {
-      var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload.key)
+      var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
       state.loadedItems.splice(idx, 1)
-      state.balance = parseInt(state.balance) - parseInt(payload.amnt)
     },
     setUser (state, payload) {
       state.user = payload
     }
   },
   actions: {
+    updateBalance ({commit}, payload) {
+      commit('subBalance', payload)
+    },
     getUser ({commit}) {
       const user = firebase.auth().currentUser
       commit('setUser', user)
@@ -76,7 +81,8 @@ export const store = new Vuex.Store({
       const amnt = payload.amnt
       firebase.database().ref().child('users').child(state.user.uid).child('items').child(key).remove()
         .then(() => {
-          commit('deleteItem', {key, amnt})
+          commit('deleteItem', key)
+          commit('subBalance', amnt)
         })
         .catch((error) => {
           console.log(error)
@@ -91,6 +97,9 @@ export const store = new Vuex.Store({
       }
       // const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(state.user.uid).child('items').child(payload.id).update(item)
+        .then((data) => {
+          commit('addBalance', item.amnt)
+        })
         .catch((error) => {
           console.log(error)
         })
