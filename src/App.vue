@@ -89,6 +89,7 @@ export default {
     logout () {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')
+        this.$store.dispatch('logOut')
       })
     },
     stats () {

@@ -121,6 +121,9 @@ export const store = new Vuex.Store({
         (err) => {
           alert(err.message)
         })
+    },
+    logOut ({state}) {
+      state.user = null
     }
   },
   getters: {
