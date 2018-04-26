@@ -63,11 +63,6 @@
 <script>
 export default {
   name: 'TableSpend',
-  computed: {
-    items () {
-      return this.$store.getters.loadedItems
-    }
-  },
   data () {
     return {
       dialog: false,
@@ -85,6 +80,23 @@ export default {
       ],
       cat: ''
     }
+  },
+  computed: {
+    user () {
+      return this.$store.getters.user
+    },
+    items () {
+      return this.$store.getters.loadedItems
+    },
+    balance () {
+      return this.$store.getters.balance
+    }
+  },
+  created () {
+    this.$store.dispatch('getUser')
+    console.log('gotuser')
+    console.log('fetchinglist')
+    this.$store.dispatch('loadItems')
   },
   methods: {
     saveItem () {

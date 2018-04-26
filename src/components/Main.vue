@@ -11,7 +11,7 @@
             <v-icon>person</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{user.email}}</v-list-tile-title>
+            <v-list-tile-title>user</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>        
         <v-list-tile>
@@ -22,14 +22,14 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <!-- <v-list-tile>
+        <v-list-tile>
           <v-list-tile-action>
             <v-icon>add</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Add Account</v-list-tile-title>
+            <v-list-tile-title>Stats</v-list-tile-title>
           </v-list-tile-content>
-        </v-list-tile> -->
+        </v-list-tile>
         <v-list-tile>
           <v-list-tile-action @click="logout">
             <v-icon>exit_to_app</v-icon>

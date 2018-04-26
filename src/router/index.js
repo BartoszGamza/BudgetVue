@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Main from '@/components/Main'
+// import Main from '@/components/Main'
+import TableSpend from '@/components/TableSpend'
+import Stats from '@/components/Stats'
 import Login from '@/components/Login'
 import SignUp from '@/components/SignUp'
 import firebase from 'firebase'
@@ -20,7 +22,15 @@ let router = new Router({
     {
       path: '/main',
       name: 'Main',
-      component: Main,
+      component: TableSpend,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/stats',
+      name: 'Stats',
+      component: Stats,
       meta: {
         requiresAuth: true
       }
