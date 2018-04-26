@@ -1,8 +1,4 @@
 <template>
-  <v-card flat>
-    <!-- <v-toolbar dark color="primary" flat extended>
-      <v-toolbar-title>Budget</v-toolbar-title>
-    </v-toolbar> -->
     <v-layout row pb-2>
       <v-flex xs8 offset-xs2>
         <v-card class="card--flex-toolbar">
@@ -31,7 +27,6 @@
         </v-card>
       </v-flex>
     </v-layout>
-  </v-card>
 </template>
 
 <script>

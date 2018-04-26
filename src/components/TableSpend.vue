@@ -82,20 +82,14 @@ export default {
     }
   },
   computed: {
-    user () {
-      return this.$store.getters.user
-    },
     items () {
       return this.$store.getters.loadedItems
-    },
-    balance () {
-      return this.$store.getters.balance
     }
   },
   created () {
     this.$store.dispatch('getUser')
-    console.log('gotuser')
-    console.log('fetchinglist')
+    // console.log('gotuser')
+    // console.log('fetchinglist')
     this.$store.dispatch('loadItems')
   },
   methods: {

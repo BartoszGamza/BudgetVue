@@ -12,7 +12,7 @@
             <v-icon>person</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>email</v-list-tile-title>
+            <v-list-tile-title>{{user}}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>        
         <v-list-tile @click="main">
@@ -41,11 +41,11 @@
         </v-list-tile>       
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar color="blue" dark fixed app>
+    <v-toolbar color="blue" dark fixed app v-if="IsUser">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
       <v-toolbar-title>Balance</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-title>balans</v-toolbar-title>
+      <v-toolbar-title>{{balance}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container fluid grid-list-lg>
@@ -68,20 +68,23 @@
 import firebase from 'firebase'
 export default {
   data: () => ({
-    drawer: null
+    drawer: false
   }),
-  // computed: {
-  //   user () {
-  //     return this.$store.getters.user
-  //   },
-  //   balance () {
-  //     return this.$store.getters.balance
-  //   }
-  // },
-  // created () {
-  //   this.$store.dispatch('getUser')
-  //   console.log('gotuser')
-  // },
+  computed: {
+    IsUser () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
+    },
+    user () {
+      if (this.IsUser) {
+        return this.$store.getters.user.email
+      }
+    },
+    balance () {
+      if (this.IsUser) {
+        return this.$store.getters.balance
+      }
+    }
+  },
   methods: {
     logout () {
       firebase.auth().signOut().then(() => {
