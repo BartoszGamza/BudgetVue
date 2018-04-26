@@ -17,12 +17,12 @@ export const store = new Vuex.Store({
     subBalance (state, payload) {
       state.balance = parseInt(state.balance) - parseInt(payload)
     },
+    setBalance (state, payload) {
+      state.balance = parseInt(payload)
+    },
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     },
-    // createItem (state, payload) {
-    //   state.loadedItems.push(payload)
-    // },
     deleteItem (state, payload) {
       var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
       state.loadedItems.splice(idx, 1)
@@ -40,10 +40,10 @@ export const store = new Vuex.Store({
       commit('setUser', user)
     },
     loadItems ({commit, state}) {
-      // const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(state.user.uid).child('items').once('value')
         .then((data) => {
           const items = []
+          var bal = 0
           const obj = data.val()
           for (let key in obj) {
             items.push({
@@ -53,6 +53,8 @@ export const store = new Vuex.Store({
               date: obj[key].date,
               cat: obj[key].cat
             })
+            bal = parseInt(bal) + parseInt(obj[key].amnt)
+            commit('setBalance', bal)
             commit('setLoadedItems', items)
           }
         })
@@ -76,7 +78,6 @@ export const store = new Vuex.Store({
         })
     },
     deleteItem ({commit, state}, payload) {
-      // const uid = firebase.auth().currentUser.uid
       const key = payload.key
       const amnt = payload.amnt
       firebase.database().ref().child('users').child(state.user.uid).child('items').child(key).remove()
@@ -95,7 +96,6 @@ export const store = new Vuex.Store({
         date: payload.date,
         cat: payload.cat
       }
-      // const uid = firebase.auth().currentUser.uid
       firebase.database().ref().child('users').child(state.user.uid).child('items').child(payload.id).update(item)
         .then((data) => {
           commit('addBalance', item.amnt)

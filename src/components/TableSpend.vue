@@ -88,8 +88,8 @@ export default {
   },
   created () {
     this.$store.dispatch('getUser')
-    // console.log('gotuser')
-    // console.log('fetchinglist')
+    console.log('gotuser')
+    console.log('fetchinglist')
     this.$store.dispatch('loadItems')
   },
   methods: {
