@@ -14,7 +14,8 @@
           <v-list-tile-content>
             <v-list-tile-title>{{user}}</v-list-tile-title>
           </v-list-tile-content>
-        </v-list-tile>        
+        </v-list-tile>
+        <v-divider></v-divider>        
         <v-list-tile @click="main">
           <v-list-tile-action>
             <v-icon>home</v-icon>
@@ -25,7 +26,7 @@
         </v-list-tile>
         <v-list-tile @click="stats">
           <v-list-tile-action>
-            <v-icon>add</v-icon>
+            <v-icon>show_chart</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Stats</v-list-tile-title>
@@ -43,7 +44,7 @@
     </v-navigation-drawer>
     <v-toolbar color="blue" dark fixed app v-if="IsUser">
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Balance</v-toolbar-title>
+      <v-toolbar-title>{{this.$route.name}}</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-title>{{balance}}</v-toolbar-title>
     </v-toolbar>

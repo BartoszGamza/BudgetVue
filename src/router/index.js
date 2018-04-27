@@ -21,7 +21,7 @@ let router = new Router({
     },
     {
       path: '/main',
-      name: 'Main',
+      name: 'Home',
       component: TableSpend,
       meta: {
         requiresAuth: true
