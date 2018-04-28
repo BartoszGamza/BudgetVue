@@ -1,19 +1,32 @@
 <template>
+<div>
   <v-card>
     <v-card-title>
-      Stats
+      Daily Spendings:
     </v-card-title>
     <v-card-text>
-      <chart></chart>
+      <daily-chart></daily-chart>
     </v-card-text>
   </v-card>
+  <br>
+  <v-card>
+    <v-card-title>
+      By category:
+    </v-card-title>
+    <v-card-text>
+      <cat-chart></cat-chart>
+    </v-card-text>
+  </v-card>
+</div>
 </template>
 
 <script>
-import Chart from '@/components/Chart.js'
+import DailyChart from '@/components/charts/DailyChart.js'
+import CatChart from '@/components/charts/CatChart.js'
 export default {
   components: {
-    Chart
+    DailyChart,
+    CatChart
   }
 }
 </script>
