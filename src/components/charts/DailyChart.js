@@ -13,11 +13,10 @@ export default {
       }
       this[a.date].amnt += parseInt(a.amnt)
     }, Object.create(null))
-    console.log(result)
 
     const times = result.map(function (item) { return item.date }).reverse()
     const vals = result.map(function (item) { return parseInt(item.amnt) }).reverse()
-    console.log(times)
+
     this.renderChart({
 
       labels: times,
