@@ -31,6 +31,9 @@ export const store = new Vuex.Store({
     setLoadedItems (state, payload) {
       state.loadedItems = payload
     },
+    setCats (state, payload) {
+      state.cats = payload
+    },
     deleteItem (state, payload) {
       var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
       state.loadedItems.splice(idx, 1)
@@ -68,6 +71,13 @@ export const store = new Vuex.Store({
         })
         .catch((error) => {
           console.log(error)
+        })
+    },
+    loadCats ({state, commit}) {
+      firebase.database().ref().child('users').child(state.user.uid).child('cats').once('value')
+        .then((data) => {
+          const cats = data.val()
+          commit('setCats', cats)
         })
     },
     createItem ({commit, state}, payload) {
@@ -155,6 +165,9 @@ export const store = new Vuex.Store({
     },
     balance (state) {
       return state.balance
+    },
+    cats (state) {
+      return state.cats
     }
   }
 })

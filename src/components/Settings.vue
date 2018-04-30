@@ -12,7 +12,7 @@
       </v-list-tile>
       <v-list-tile v-for="cat in cats" :key="cat.key">{{cat}}
         <v-spacer></v-spacer>
-        <v-icon>delete</v-icon>
+        <v-icon @click="delCat(cat)">delete</v-icon>
       </v-list-tile>
     </v-list>
     </v-card-text>
@@ -34,20 +34,24 @@ import firebase from 'firebase'
 export default {
   data () {
     return {
-      cats: ['Alcohol',
-        'Grocceries',
-        'Entertainment',
-        'Tobacco',
-        'Restaurant',
-        'Soft drinks',
-        'Other'
-      ],
       newCat: ''
+    }
+  },
+  created () {
+    this.$store.dispatch('loadCats')
+  },
+  computed: {
+    cats () {
+      return this.$store.getters.cats
     }
   },
   methods: {
     addNewCat () {
 
+    },
+    delCat (item) {
+      const idx = this.cats.indexOf(item)
+      console.log(idx)
     },
     logout () {
       firebase.auth().signOut().then(() => {
