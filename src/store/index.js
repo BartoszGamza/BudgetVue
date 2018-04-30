@@ -95,6 +95,15 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
+    addCat ({commit, state}, payload) {
+      firebase.database().ref().child('users').child(state.user.uid).child('cats').push(payload)
+        // .then((data) => {
+        //   commit('addCat', payload)
+        // })
+        .catch((error) => {
+          console.log(error)
+        })
+    },
     deleteItem ({commit, state}, payload) {
       const key = payload.key
       const amnt = payload.amnt

@@ -47,7 +47,10 @@ export default {
   },
   methods: {
     addNewCat () {
-
+      const payload = this.newCat
+      this.$store.dispatch('addCat', payload)
+      this.newCat = ''
+      this.$store.dispatch('loadCats')
     },
     delCat (item) {
       const idx = this.cats.indexOf(item)
