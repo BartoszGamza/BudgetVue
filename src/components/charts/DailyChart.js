@@ -22,7 +22,7 @@ export default {
       labels: times,
       datasets: [
         {
-          label: 'Daily spending',
+          label: 'Daily',
           backgroundColor: '#fc005a',
           data: vals
         }

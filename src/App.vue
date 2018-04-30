@@ -32,12 +32,12 @@
             <v-list-tile-title>Stats</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="logout">
+        <v-list-tile @click="settings">
           <v-list-tile-action>
-            <v-icon>exit_to_app</v-icon>
+            <v-icon>settings</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Logout</v-list-tile-title>
+            <v-list-tile-title>Settings</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>       
       </v-list>
@@ -66,7 +66,6 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 export default {
   data: () => ({
     drawer: false
@@ -87,17 +86,14 @@ export default {
     }
   },
   methods: {
-    logout () {
-      firebase.auth().signOut().then(() => {
-        this.$router.replace('login')
-        this.$store.dispatch('logOut')
-      })
-    },
     stats () {
       this.$router.replace('stats')
     },
     main () {
       this.$router.replace('main')
+    },
+    settings () {
+      this.$router.replace('settings')
     }
   }
 }

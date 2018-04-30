@@ -2,7 +2,7 @@
 <div>
   <v-card>
     <v-card-title>
-      Daily Spendings:
+      <h3>Daily spendings:</h3>
     </v-card-title>
     <v-card-text>
       <daily-chart></daily-chart>
@@ -11,7 +11,7 @@
   <br>
   <v-card>
     <v-card-title>
-      By category:
+      <h3>By category:</h3>
     </v-card-title>
     <v-card-text>
       <cat-chart></cat-chart>
