@@ -56,7 +56,7 @@
           <v-card-actions>
             <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
             <v-btn v-else color="primary" @click="saveEdit">Save Edit</v-btn>
-            <v-btn @click.stop="dialog = !dialog">Cancel</v-btn> 
+            <v-btn @click="clearEdit">Cancel</v-btn> 
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -106,11 +106,7 @@ export default {
       }
       this.$store.dispatch('createItem', itemData)
       this.$store.dispatch('loadItems')
-      this.amnout = ''
-      this.description = ''
-      this.cat = ''
-      this.date = null
-      this.dialog = !this.dialog
+      this.clearEdit()
     },
     deleteItem (key, amnt) {
       this.$store.dispatch('deleteItem', {key, amnt})
@@ -135,6 +131,9 @@ export default {
       }
       this.$store.dispatch('editItem', itemEdit)
       this.$store.dispatch('loadItems')
+      this.clearEdit()
+    },
+    clearEdit () {
       this.dialog = !this.dialog
       this.amnout = ''
       this.description = ''
