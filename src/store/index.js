@@ -7,6 +7,14 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     loadedItems: [],
+    cats: ['Alcohol',
+      'Grocceries',
+      'Entertainment',
+      'Tobacco',
+      'Restaurant',
+      'Soft drinks',
+      'Other'
+    ],
     user: null,
     balance: 0
   },
@@ -104,10 +112,12 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
-    signUp ({commit}, payload) {
+    signUp ({commit, state}, payload) {
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password).then(
         (user) => {
           commit('setUser', user)
+          const def = state.cats
+          firebase.database().ref().child('users').child(state.user.uid).child('cats').set(def)
         },
         (err) => {
           alert(err.message)
@@ -124,6 +134,7 @@ export const store = new Vuex.Store({
     },
     logOut ({state}) {
       state.user = null
+      state.loadedItems = []
     }
   },
   getters: {

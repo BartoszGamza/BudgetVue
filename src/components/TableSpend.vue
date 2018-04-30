@@ -79,7 +79,8 @@ export default {
         'Entertainment',
         'Tobacco',
         'Restaurant',
-        'Soft drinks'
+        'Soft drinks',
+        'Other'
       ],
       cat: ''
     }

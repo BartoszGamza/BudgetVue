@@ -3,21 +3,19 @@
     <v-card>
     <v-card-title><h2>Edit categories</h2></v-card-title>
     <v-card-text>
-    <v-expansion-panel expand>
-    <v-expansion-panel-content v-for="cat in cats" :key="cat.key">
-      <div slot="header">{{cat}}</div>
-      <v-card>
-        <v-card-actions>
-          <v-btn flat color="green">Edit</v-btn>
-          <v-btn flat color="red">Delete</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-expansion-panel-content>
-    </v-expansion-panel>
+    <v-list dense>
+      <v-list-tile>
+      <v-text-field
+       placeholder="Add new"
+       v-model="newCat"
+      ></v-text-field><v-icon @click="addNewCat">add</v-icon>
+      </v-list-tile>
+      <v-list-tile v-for="cat in cats" :key="cat.key">{{cat}}
+        <v-spacer></v-spacer>
+        <v-icon>delete</v-icon>
+      </v-list-tile>
+    </v-list>
     </v-card-text>
-    <v-card-actions>
-      <v-btn>Add new</v-btn>
-    </v-card-actions>
     </v-card>
     <br>
     <v-card>
@@ -41,11 +39,16 @@ export default {
         'Entertainment',
         'Tobacco',
         'Restaurant',
-        'Soft drinks'
-      ]
+        'Soft drinks',
+        'Other'
+      ],
+      newCat: ''
     }
   },
   methods: {
+    addNewCat () {
+
+    },
     logout () {
       firebase.auth().signOut().then(() => {
         this.$router.replace('login')

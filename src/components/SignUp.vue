@@ -60,6 +60,7 @@ export default {
         password: this.password
       }
       this.$store.dispatch('signUp', signData)
+      // this.$store.dispatch('pushDefCats')
     }
   }
 }
