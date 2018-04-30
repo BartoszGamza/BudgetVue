@@ -30,17 +30,20 @@
             <v-text-field
             label="Amnout"
             v-model="amnout"
-            mask="####"
+            type="number"
+            required
             ></v-text-field>
             <v-text-field
             label="Description"
             v-model="description"
+            required
           ></v-text-field>
             <v-select
             v-model="cat"
             label="Select a category"
             single-line
             :items="cats"
+            required
         ></v-select>
             <v-date-picker
             full-width

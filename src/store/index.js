@@ -12,13 +12,13 @@ export const store = new Vuex.Store({
   },
   mutations: {
     addBalance (state, payload) {
-      state.balance = parseInt(state.balance) + parseInt(payload)
+      state.balance = parseFloat(state.balance) + parseFloat(payload)
     },
     subBalance (state, payload) {
-      state.balance = parseInt(state.balance) - parseInt(payload)
+      state.balance = parseFloat(state.balance) - parseFloat(payload)
     },
     setBalance (state, payload) {
-      state.balance = parseInt(payload)
+      state.balance = parseFloat(payload)
     },
     setLoadedItems (state, payload) {
       state.loadedItems = payload
@@ -53,7 +53,7 @@ export const store = new Vuex.Store({
               date: obj[key].date,
               cat: obj[key].cat
             })
-            bal = parseInt(bal) + parseInt(obj[key].amnt)
+            bal = parseFloat(bal) + parseFloat(obj[key].amnt)
             commit('setBalance', bal)
             commit('setLoadedItems', items)
           }
