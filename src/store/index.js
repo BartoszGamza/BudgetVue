@@ -7,12 +7,13 @@ Vue.use(Vuex)
 export const store = new Vuex.Store({
   state: {
     loadedItems: [],
-    cats: ['Alcohol',
+    cats: [
+      'Alcohol',
       'Grocceries',
-      'Entertainment',
+      'Entertainmen',
       'Tobacco',
       'Restaurant',
-      'Soft drinks',
+      'Softdrinks',
       'Other'
     ],
     user: null,
@@ -104,6 +105,8 @@ export const store = new Vuex.Store({
           console.log(error)
         })
     },
+    deleteCat ({commit, state}, payload) {
+    },
     deleteItem ({commit, state}, payload) {
       const key = payload.key
       const amnt = payload.amnt
@@ -136,7 +139,11 @@ export const store = new Vuex.Store({
         (user) => {
           commit('setUser', user)
           const def = state.cats
-          firebase.database().ref().child('users').child(state.user.uid).child('cats').set(def)
+          for (let key in def) {
+            const cat = def[key]
+            console.log(cat)
+            firebase.database().ref().child('users').child(state.user.uid).child('cats').push(cat)
+          }
         },
         (err) => {
           alert(err.message)

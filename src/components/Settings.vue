@@ -12,7 +12,7 @@
       </v-list-tile>
       <v-list-tile v-for="cat in cats" :key="cat.key">{{cat}}
         <v-spacer></v-spacer>
-        <v-icon @click="delCat(cat)">delete</v-icon>
+        <v-icon @click="delCat(cat.key)">delete</v-icon>
       </v-list-tile>
     </v-list>
     </v-card-text>
@@ -52,9 +52,8 @@ export default {
       this.newCat = ''
       this.$store.dispatch('loadCats')
     },
-    delCat (item) {
-      const idx = this.cats.indexOf(item)
-      console.log(idx)
+    delCat (key) {
+      console.log(key)
     },
     logout () {
       firebase.auth().signOut().then(() => {
