@@ -10,7 +10,7 @@ export const store = new Vuex.Store({
     cats: [
       'Alcohol',
       'Grocceries',
-      'Entertainmen',
+      'Entertainment',
       'Tobacco',
       'Restaurant',
       'Softdrinks',
@@ -38,6 +38,10 @@ export const store = new Vuex.Store({
     deleteItem (state, payload) {
       var idx = state.loadedItems.map(function (item) { return item.id }).indexOf(payload)
       state.loadedItems.splice(idx, 1)
+    },
+    deleteCat (state, payload) {
+      var idx = state.cats.map(function (cat) { return cat.id }).indexOf(payload)
+      state.cats.splice(idx, 1)
     },
     setUser (state, payload) {
       state.user = payload
@@ -77,7 +81,14 @@ export const store = new Vuex.Store({
     loadCats ({state, commit}) {
       firebase.database().ref().child('users').child(state.user.uid).child('cats').once('value')
         .then((data) => {
-          const cats = data.val()
+          const obj = data.val()
+          const cats = []
+          for (let key in obj) {
+            cats.push({
+              id: key,
+              name: obj[key]
+            })
+          }
           commit('setCats', cats)
         })
     },
@@ -106,6 +117,13 @@ export const store = new Vuex.Store({
         })
     },
     deleteCat ({commit, state}, payload) {
+      firebase.database().ref().child('users').child(state.user.uid).child('cats').child(payload).remove()
+        .then(() => {
+          commit('deleteCat', payload)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     },
     deleteItem ({commit, state}, payload) {
       const key = payload.key

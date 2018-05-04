@@ -10,9 +10,10 @@
        v-model="newCat"
       ></v-text-field><v-icon @click="addNewCat">add</v-icon>
       </v-list-tile>
-      <v-list-tile v-for="cat in cats" :key="cat.key">{{cat}}
+      <v-list-tile v-for="cat in cats" :key="cat.key">
+        {{cat.name}}
         <v-spacer></v-spacer>
-        <v-icon @click="delCat(cat.key)">delete</v-icon>
+        <v-icon @click="delCat(cat.id)">delete</v-icon>
       </v-list-tile>
     </v-list>
     </v-card-text>
@@ -54,6 +55,7 @@ export default {
     },
     delCat (key) {
       console.log(key)
+      this.$store.dispatch('deleteCat', key)
     },
     logout () {
       firebase.auth().signOut().then(() => {
