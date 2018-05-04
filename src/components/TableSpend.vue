@@ -25,7 +25,7 @@
             </v-btn>
       <v-dialog v-model="dialog" max-width="500px">
         <v-card class="text-xs-center">
-          <v-card-text>
+          <v-card-text >
           <v-form>
             <v-text-field
             label="Amnout"
@@ -74,27 +74,26 @@ export default {
       date: null,
       id: null,
       isEdit: false,
-      cats: ['Alcohol',
-        'Grocceries',
-        'Entertainment',
-        'Tobacco',
-        'Restaurant',
-        'Soft drinks',
-        'Other'
-      ],
       cat: ''
     }
   },
   computed: {
     items () {
       return this.$store.getters.loadedItems
+    },
+    cats () {
+      const obj = this.$store.getters.cats
+      const cats = []
+      for (let key in obj) {
+        cats.push(obj[key].name)
+      }
+      return cats
     }
   },
   created () {
     this.$store.dispatch('getUser')
-    console.log('gotuser')
-    console.log('fetchinglist')
     this.$store.dispatch('loadItems')
+    this.$store.dispatch('loadCats')
   },
   methods: {
     saveItem () {

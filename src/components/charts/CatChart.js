@@ -13,11 +13,9 @@ export default {
       }
       this[a.cat].amnt += parseInt(a.amnt)
     }, Object.create(null))
-    console.log(result)
 
     const cats = result.map(function (item) { return item.cat })
     const vals = result.map(function (item) { return parseInt(item.amnt) })
-    console.log(cats)
     this.renderChart({
 
       labels: cats,

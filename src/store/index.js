@@ -159,7 +159,6 @@ export const store = new Vuex.Store({
           const def = state.cats
           for (let key in def) {
             const cat = def[key]
-            console.log(cat)
             firebase.database().ref().child('users').child(state.user.uid).child('cats').push(cat)
           }
         },

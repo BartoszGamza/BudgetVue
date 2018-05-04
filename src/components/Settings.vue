@@ -54,7 +54,6 @@ export default {
       this.$store.dispatch('loadCats')
     },
     delCat (key) {
-      console.log(key)
       this.$store.dispatch('deleteCat', key)
     },
     logout () {
