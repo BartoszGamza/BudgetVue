@@ -22,7 +22,7 @@ export default {
       datasets: [
         {
           label: 'Daily spending',
-          backgroundColor: '#fc005a',
+          backgroundColor: ['#FC005A', '#ECA0A6', '#FFE4E6', '#5BBAB5', '#C0FCF8'],
           data: vals
         }
       ]
