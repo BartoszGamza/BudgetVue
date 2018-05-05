@@ -26,35 +26,59 @@
       <v-dialog v-model="dialog" max-width="500px">
         <v-card class="text-xs-center">
           <v-card-text >
-          <v-form>
+          <v-form ref="form" v-model="valid" lazy-validation>
             <v-text-field
             label="Amnout"
             v-model="amnout"
             type="number"
+            :rules="[v => !!v || 'Amnout is required']"
             required
             ></v-text-field>
             <v-text-field
             label="Description"
             v-model="description"
-            required
           ></v-text-field>
             <v-select
             v-model="cat"
             label="Select a category"
             single-line
             :items="cats"
+            :rules="[v => !!v || 'Category is required']"
             required
         ></v-select>
-            <v-date-picker
+            <!-- <v-date-picker
             full-width
             v-model="date"
+            :rules="[v => !!v || 'Date is required']"
+            required
             >
-            </v-date-picker>
+            </v-date-picker> -->
+            <v-menu
+              ref="menu"
+              :close-on-content-click="false"
+              v-model="menu"
+              :nudge-right="80"
+              :return-value.sync="date"
+              lazy
+              transition="scale-transition"
+              offset-y
+              full-width
+              min-width="290px"
+            >
+            <v-text-field
+              slot="activator"
+              v-model="date"
+              label="Select date"
+              :rules="[v => !!v || 'Date is required']"
+              required
+            ></v-text-field>
+            <v-date-picker v-model="date" @input="$refs.menu.save(date)"></v-date-picker>
+          </v-menu>
           </v-form>
           </v-card-text>
           
           <v-card-actions>
-            <v-btn v-if="isEdit==false" color="primary" @click="saveItem">Save</v-btn>
+            <v-btn v-if="isEdit==false" color="primary" :disabled="!valid" @click="saveItem">Save</v-btn>
             <v-btn v-else color="primary" @click="saveEdit">Save Edit</v-btn>
             <v-btn @click="clearEdit">Cancel</v-btn> 
           </v-card-actions>
@@ -74,7 +98,9 @@ export default {
       date: null,
       id: null,
       isEdit: false,
-      cat: ''
+      cat: '',
+      valid: true,
+      menu: false
     }
   },
   computed: {
@@ -97,15 +123,17 @@ export default {
   },
   methods: {
     saveItem () {
-      const itemData = {
-        amnt: this.amnout,
-        desc: this.description,
-        date: this.date,
-        cat: this.cat
+      if (this.$refs.form.validate()) {
+        const itemData = {
+          amnt: this.amnout,
+          desc: this.description,
+          date: this.date,
+          cat: this.cat
+        }
+        this.$store.dispatch('createItem', itemData)
+        this.$store.dispatch('loadItems')
+        this.clearEdit()
       }
-      this.$store.dispatch('createItem', itemData)
-      this.$store.dispatch('loadItems')
-      this.clearEdit()
     },
     deleteItem (key, amnt) {
       this.$store.dispatch('deleteItem', {key, amnt})
@@ -121,24 +149,28 @@ export default {
       this.$store.dispatch('updateBalance', this.amnout)
     },
     saveEdit () {
-      const itemEdit = {
-        amnt: this.amnout,
-        desc: this.description,
-        date: this.date,
-        cat: this.cat,
-        id: this.id
+      if (this.$refs.form.validate()) {
+        const itemEdit = {
+          amnt: this.amnout,
+          desc: this.description,
+          date: this.date,
+          cat: this.cat,
+          id: this.id
+        }
+        this.$store.dispatch('editItem', itemEdit)
+        this.$store.dispatch('loadItems')
+        this.clearEdit()
       }
-      this.$store.dispatch('editItem', itemEdit)
-      this.$store.dispatch('loadItems')
-      this.clearEdit()
     },
     clearEdit () {
       this.dialog = !this.dialog
-      this.amnout = ''
-      this.description = ''
-      this.cat = ''
-      this.date = null
-      this.id = null
+      // this.amnout = ''
+      // this.description = ''
+      // this.cat = ''
+      // this.date = null
+      // this.id = null
+      // this.valid = !this.valid
+      this.$refs.form.reset()
     }
   }
 }
