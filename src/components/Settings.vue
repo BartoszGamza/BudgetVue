@@ -39,6 +39,7 @@ export default {
     }
   },
   created () {
+    this.$store.dispatch('getUser')
     this.$store.dispatch('loadCats')
   },
   computed: {

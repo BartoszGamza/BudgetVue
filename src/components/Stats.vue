@@ -24,6 +24,9 @@
 import DailyChart from '@/components/charts/DailyChart.js'
 import CatChart from '@/components/charts/CatChart.js'
 export default {
+  created () {
+    this.$store.dispatch('getUser')
+  },
   components: {
     DailyChart,
     CatChart
